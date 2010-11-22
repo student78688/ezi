@@ -1,0 +1,26 @@
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\lib\libwx-c-0-9-0-2.so
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\data\documents.txt
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\data\keywords.txt
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\Stemmer.dll
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\wx.NET.dll
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\Stemmer.pdb
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\obj\x86\Debug\SearchEngine.exe
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\obj\x86\Debug\SearchEngine.pdb
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\data\document_test.txt
+C:\Documents and Settings\Magda\Pulpit\SearchEngine\SearchEngine\bin\Debug\data\keywords_test.txt
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\obj\x86\Debug\SearchEngine.exe
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\obj\x86\Debug\SearchEngine.pdb
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\data\document_test.txt
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\data\keywords_test.txt
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\lib\libwx-c-0-9-0-2.so
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\data\documents.txt
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\data\keywords.txt
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\Stemmer.dll
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\wx.NET.dll
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\bin\Debug\Stemmer.pdb
+C:\Documents and Settings\Jacek\!!!Uczelnia\III-Sem\Eksploracja zasobow internetu\SearchEngine\SearchEngine\obj\x86\Debug\ResolveAssemblyReference.cache

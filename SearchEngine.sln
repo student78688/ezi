@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchEngine", "SearchEngine\SearchEngine.csproj", "{813551B6-35ED-4757-8E5F-9D2EECF4AD80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stemmer", "Stemmer\Stemmer.csproj", "{57A2F0D6-D5AD-44A8-84CE-FECEA54CF41E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57A2F0D6-D5AD-44A8-84CE-FECEA54CF41E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57A2F0D6-D5AD-44A8-84CE-FECEA54CF41E}.Debug|x86.Build.0 = Debug|Any CPU
+		{57A2F0D6-D5AD-44A8-84CE-FECEA54CF41E}.Release|x86.ActiveCfg = Release|Any CPU
+		{57A2F0D6-D5AD-44A8-84CE-FECEA54CF41E}.Release|x86.Build.0 = Release|Any CPU
+		{813551B6-35ED-4757-8E5F-9D2EECF4AD80}.Debug|x86.ActiveCfg = Debug|x86
+		{813551B6-35ED-4757-8E5F-9D2EECF4AD80}.Debug|x86.Build.0 = Debug|x86
+		{813551B6-35ED-4757-8E5F-9D2EECF4AD80}.Release|x86.ActiveCfg = Release|x86
+		{813551B6-35ED-4757-8E5F-9D2EECF4AD80}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SearchEngine\SearchEngine.csproj
+	EndGlobalSection
+EndGlobal
