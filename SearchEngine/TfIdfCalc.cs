@@ -99,7 +99,7 @@ namespace SearchEngine
 									break;
 							}
 							
-							SearchDocument document = new SearchDocument(header, sb.ToString());
+							SearchDocument document = new SearchDocument(header, sb.ToString(), group);
 							tmpDocuments.Add(document);
 						}
 					}

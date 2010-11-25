@@ -1,17 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SearchEngine/SearchDocument.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SearchEngine/CentroidGroup.cs" ctype="Workbench">
     <Files>
-      <File FileName="SearchEngine/TfIdfCalc.cs" Line="92" Column="25" />
+      <File FileName="SearchEngine/TfIdfCalc.cs" Line="102" Column="81" />
       <File FileName="SearchEngine/SearchFrame.cs" Line="324" Column="4" />
-      <File FileName="SearchEngine/SearchDocument.cs" Line="63" Column="29" />
+      <File FileName="SearchEngine/SearchDocument.cs" Line="60" Column="3" />
       <File FileName="SearchEngine/SearchElement.cs" Line="112" Column="3" />
+      <File FileName="SearchEngine/CentroidGroup.cs" Line="38" Column="5" />
+      <File FileName="SearchEngine/GroupEngine.cs" Line="7" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="SearchEngine" expanded="True">
-            <Node name="SearchDocument.cs" selected="True" />
+            <Node name="CentroidGroup.cs" selected="True" />
           </Node>
         </State>
       </Pad>
