@@ -55,6 +55,8 @@
     <Compile Include="SearchQuery.cs" />
     <Compile Include="DetailsFrame.cs" />
     <Compile Include="SearchElement.cs" />
+    <None Include="data\keywords-2.txt" />
+    <None Include="data\documents-2.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

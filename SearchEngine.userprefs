@@ -1,16 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SearchEngine/TfIdfCalc.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SearchEngine/SearchDocument.cs" ctype="Workbench">
     <Files>
-      <File FileName="SearchEngine/TfIdfCalc.cs" Line="169" Column="19" />
-      <File FileName="SearchEngine/SearchFrame.cs" Line="223" Column="13" />
+      <File FileName="SearchEngine/TfIdfCalc.cs" Line="92" Column="25" />
+      <File FileName="SearchEngine/SearchFrame.cs" Line="324" Column="4" />
+      <File FileName="SearchEngine/SearchDocument.cs" Line="63" Column="29" />
+      <File FileName="SearchEngine/SearchElement.cs" Line="112" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="SearchEngine" expanded="True">
-            <Node name="data" expanded="True" />
-            <Node name="TfIdfCalc.cs" selected="True" />
+            <Node name="SearchDocument.cs" selected="True" />
           </Node>
         </State>
       </Pad>

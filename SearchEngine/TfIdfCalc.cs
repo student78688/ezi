@@ -69,6 +69,7 @@ namespace SearchEngine
 			List<SearchDocument> tmpDocuments = new List<SearchDocument>();
 			StringBuilder sb = new StringBuilder();
 			string header = string.Empty;
+			string group = string.Empty;
 			
 			try
 			{
@@ -81,11 +82,14 @@ namespace SearchEngine
 							sb.Remove(0, sb.Length);
 							string line;
 							int counter = 0;
-							header = string.Empty;						
+							header = string.Empty;	
+							group = string.Empty;
 						
 							while(((line = sr.ReadLine()) != string.Empty))
 							{
 								if (counter == 0)
+									group = string.Format("{0}", line);
+								if (counter == 1)
 									header = string.Format("{0} ", line);
 								else
 									sb.Append(string.Format("{0} ", line));

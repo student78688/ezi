@@ -15,6 +15,8 @@ namespace SearchEngine
 			documentsBtn,
 			searchBtn,
 			resultsLC,
+			kSC,
+			iterSC,
 			menuBar,
 			quitFileMenu,
 			aboutHelpMenu,
@@ -30,6 +32,8 @@ namespace SearchEngine
 		protected wx.Button documentsBtn;
 		protected wx.Button searchBtn;
 		protected wx.ListCtrl resultsLC;
+		protected wx.SpinCtrl kSC;
+		protected wx.SpinCtrl iterSC;
 		protected wx.MenuBar menuBar;
 		protected wx.Menu fileMenu;
 		protected wx.Menu helpMenu;
@@ -72,6 +76,8 @@ namespace SearchEngine
 			documentsBtn = new wx.Button (this, (int)Id.documentsBtn, "Wczytaj dokumenty");
 			searchBtn = new wx.Button (this, (int)Id.searchBtn, "Szukaj");
 			resultsLC = new wx.ListCtrl (this, (int)Id.resultsLC);
+			kSC = new wx.SpinCtrl(this, (int)Id.kSC, "2");
+			iterSC = new wx.SpinCtrl(this, (int)Id.iterSC, "5");
 			
 			menuBar = new wx.MenuBar ();
 			this.MenuBar = menuBar;
@@ -110,21 +116,44 @@ namespace SearchEngine
 			{
 				wx.BoxSizer boxSizer = new wx.BoxSizer (wx.Orientation.wxVERTICAL);
 				{
-					wx.StaticBoxSizer dataSizer = new wx.StaticBoxSizer (new wx.StaticBox (this, "Dane"), wx.Orientation.wxHORIZONTAL);
+					wx.BoxSizer detailsSizer = new wx.BoxSizer(wx.Orientation.wxHORIZONTAL);
 					{
-						wx.FlexGridSizer gridSizer = new wx.FlexGridSizer (2, 2, 5, 10);
+						wx.StaticBoxSizer dataSizer = new wx.StaticBoxSizer (new wx.StaticBox (this, "Dane"), wx.Orientation.wxHORIZONTAL);
 						{
-							gridSizer.Add (documentsTC, 0, wx.SizerFlag.wxEXPAND);
-							gridSizer.Add (documentsBtn, 0, wx.SizerFlag.wxNo_FLAG);
-							gridSizer.Add (termsTC, 0, wx.SizerFlag.wxEXPAND);
-							gridSizer.Add (termsBtn, 0, wx.SizerFlag.wxEXPAND);
-							
+							wx.FlexGridSizer gridSizer = new wx.FlexGridSizer (2, 2, 5, 10);
+							{
+								gridSizer.Add (documentsTC, 0, wx.SizerFlag.wxEXPAND);
+								gridSizer.Add (documentsBtn, 0, wx.SizerFlag.wxNo_FLAG);
+								gridSizer.Add (termsTC, 0, wx.SizerFlag.wxEXPAND);
+								gridSizer.Add (termsBtn, 0, wx.SizerFlag.wxEXPAND);
+								
+							}
+							gridSizer.AddGrowableCol (0);
+							dataSizer.Add (gridSizer, 1, wx.SizerFlag.wxALL | wx.SizerFlag.wxEXPAND, 5);
 						}
-						gridSizer.AddGrowableCol (0);
-						dataSizer.Add (gridSizer, 1, wx.SizerFlag.wxALL | wx.SizerFlag.wxEXPAND, 5);
+						detailsSizer.Add (dataSizer, 1, wx.SizerFlag.wxEXPAND);
+						
+						detailsSizer.Add(5, 10, 0, wx.SizerFlag.wxNo_FLAG, 0);
+						
+						wx.StaticBoxSizer configSizer = new wx.StaticBoxSizer(new wx.StaticBox(this, "Konfiguracja"),
+						                                                      wx.Orientation.wxHORIZONTAL);
+						{
+							wx.FlexGridSizer gridSizer2 = new wx.FlexGridSizer(2, 2, 5, 5);
+							{
+								gridSizer2.Add(new wx.StaticText(this, "k: "), 0, 
+								               wx.SizerFlag.wxALIGN_CENTRE_VERTICAL|wx.SizerFlag.wxALIGN_RIGHT);
+								gridSizer2.Add(kSC, 0, wx.SizerFlag.wxNo_FLAG);
+								gridSizer2.Add(new wx.StaticText(this, "iteracje: "), 0, 
+								               wx.SizerFlag.wxALIGN_CENTRE_VERTICAL|wx.SizerFlag.wxALIGN_RIGHT);
+								gridSizer2.Add(iterSC, 0, wx.SizerFlag.wxNo_FLAG);
+							}
+							configSizer.Add(gridSizer2, 0, wx.SizerFlag.wxALL, 5);
+						}
+						detailsSizer.Add(configSizer, 0, wx.SizerFlag.wxEXPAND, 0);
+						
 					}
-					boxSizer.Add (dataSizer, 0, wx.SizerFlag.wxEXPAND);
-					
+					boxSizer.Add (detailsSizer, 0, wx.SizerFlag.wxEXPAND);
+									
 					boxSizer.Add (20, 5, 0, wx.SizerFlag.wxEXPAND, 0);
 					
 					wx.StaticBoxSizer searchSizer = new wx.StaticBoxSizer (new wx.StaticBox (this, "Wyszukiwanie"), wx.Orientation.wxVERTICAL);
@@ -280,7 +309,7 @@ namespace SearchEngine
 		
 		protected void OnAboutMenu (object sender, wx.Event evt)
 		{
-			string msg = "Eksperymentalna wyszukiwarka\n\nJacek Trubłajewicz <gothic@os.pl>";
+			string msg = "Eksperymentalna wyszukiwarka v2\n\nJacek Trubłajewicz <gothic@os.pl>";
 			wx.MessageDialog.MessageBox (msg, "O programie");
 		}
 		

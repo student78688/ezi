@@ -6,11 +6,13 @@ namespace SearchEngine
 		// przechowywane do sprawdzania czy zapytanie się nie powtarza
 		protected int[] lastQueryBagOfWords;
 		protected double tfIdfSim;
+		protected string group;
 		
 		
-		public SearchDocument (string header, string body) :
+		public SearchDocument (string header, string body, string group) :
 			base(header, body)
 		{
+			this.group = group;
 		}
 		
 		
@@ -49,6 +51,16 @@ namespace SearchEngine
 		public double TfIdfSim
 		{
 			get { return tfIdfSim; }
+		}
+		
+		public double[] TfIdf
+		{
+			get { return tfIdf; }
+		}
+		
+		public double TfIdfWidth
+		{
+			get { return tfIdfWidth; }
 		}
 		
 	}
