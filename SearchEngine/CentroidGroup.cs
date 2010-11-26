@@ -11,6 +11,7 @@ namespace SearchEngine
 		protected double centroidTfIdfWidth;
 		// podobienstwo centroidu do kazdego z dokumentow kolekcji
 		protected Dictionary<SearchDocument, double> centroidSimilarity;
+		// lista wszystkich dokumentow kolekcji
 		protected List<SearchDocument> allDocuments;
 		// dokumenty nalezace do grupy centroidu
 		protected List<SearchDocument> centroidGroup;
@@ -79,7 +80,26 @@ namespace SearchEngine
 			centroidGroup = null;
 		}
 		
+		public void AddToGroup(SearchDocument document)
+		{
+			if (!centroidGroup.Contains(document))
+				centroidGroup.Add(document);
+		}
 		
+		public List<SearchDocument> GroupDocuments
+		{
+			get { return centroidGroup; }
+		}
+		
+		public List<SearchDocument> OldGroupDocuments
+		{
+			get { return oldCentroidGroup; }
+		}
+		
+		public double GetDocumentSimilarity(SearchDocument doc)
+		{
+			return centroidSimilarity[doc];
+		}
 	}
 }
 
