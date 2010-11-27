@@ -42,7 +42,8 @@ namespace SearchEngine
 		protected DetailsFrame detailsDocumentsFrame;
 		protected DetailsFrame detailsTermsFrame;
 		
-		protected TfIdfCalc tfIdf;
+		protected TfIdfCalc searcher;
+		protected GroupEngine grouper;
 
 		public SearchFrame (wx.Frame parent, int id, string title, Size size, Point pos, wx.WindowStyles style) : base(parent, id, title, pos, size, style)
 		{
@@ -60,9 +61,11 @@ namespace SearchEngine
 			EVT_BUTTON ((int)Id.documentsBtn, new wx.EventListener (OnDocumentsBtnClick));
 			EVT_BUTTON((int) Id.searchBtn, new wx.EventListener(OnSearchBtnClick));
 			EVT_SIZE(new wx.EventListener(OnSizeChanged));
+			EVT_SPINCTRL((int) Id.kSC, new wx.EventListener(OnKSpinChanged));
+			EVT_SPINCTRL((int) Id.iterSC, new wx.EventListener(OnIterSpinChanged));
 						
-			tfIdf = new TfIdfCalc(new StandardTextProcessor(new PorterStemmerAlgorithm.Stemmer2()));
-			
+			searcher = new TfIdfCalc(new StandardTextProcessor(new PorterStemmerAlgorithm.Stemmer2()));
+						
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				this.BackgroundColour = wx.SystemSettings.GetColour(wx.SystemColour.wxSYS_COLOUR_BTNFACE);	
 		}
@@ -98,6 +101,8 @@ namespace SearchEngine
 			
 		}
 
+		private const int similarityColumnSize = 60;
+
 		protected void DoControlsProperties ()
 		{
 			termsTC.Enabled = false;
@@ -106,8 +111,11 @@ namespace SearchEngine
 			resultsLC.MinSize = new Size (280, 170);
 			resultsLC.StyleFlags = wx.WindowStyles.LC_REPORT;
 			resultsLC.InsertColumn (0, "Dokument");
-			resultsLC.InsertColumn (1, "Miara");
-			resultsLC.SetColumnWidth(1, 60);
+			resultsLC.InsertColumn (1, "Grupa");
+			resultsLC.InsertColumn (2, "Miara");
+			resultsLC.SetColumnWidth(2, similarityColumnSize);
+//			kSC.set
+//			iterSC.Min = 1;
 		}
 
 		protected void DoLayout ()
@@ -189,35 +197,19 @@ namespace SearchEngine
 			
 			if (openDlg.ShowModal() == wx.ShowModalResult.OK)
 			{
-				if (tfIdf.IsReady)
+				if (searcher.IsReady)
 				{
 					documentsTC.Value = string.Empty;
-					tfIdf.ResetData();
+					searcher.ResetData();
 				}
 				
 				termsTC.Value = openDlg.Path;	
-				tfIdf.ReadTerms(openDlg.Path);
+				searcher.ReadTerms(openDlg.Path);
 			}
 			else
 				return;
 			
-			if (!tfIdf.IsReady)
-				return;
-						
-			try
-			{
-				tfIdf.CalucateTfIdfFactors();
-			}
-			catch (CalculationException ex)
-			{
-				wx.MessageDialog.ShowModal(ex.Message, "Błąd w obliczeniach", 
-				                           wx.WindowStyles.ICON_ERROR|wx.WindowStyles.DIALOG_OK);
-				tfIdf.ResetData();
-				wx.MessageDialog.ShowModal("Wczytane dane zostały zresetowane. Wczytaj dane ponownie", "Informacja", 
-				                           wx.WindowStyles.ICON_INFORMATION|wx.WindowStyles.DIALOG_OK);
-				termsTC.Value = documentsTC.Value = string.Empty;
-				return;
-			}
+			this.PrepareToSearch();
 		}
 
 		protected void OnDocumentsBtnClick (object sender, wx.Event evt)
@@ -226,58 +218,63 @@ namespace SearchEngine
 			
 			if (openDlg.ShowModal() == wx.ShowModalResult.OK)
 			{
-				if (tfIdf.IsReady)
+				if (searcher.IsReady)
 				{
-					tfIdf.ResetData();
+					searcher.ResetData();
 					termsTC.Value = string.Empty;
 				}
 				
 				documentsTC.Value = openDlg.Path;	
-				tfIdf.ReadDocuments(openDlg.Path);
+				searcher.ReadDocuments(openDlg.Path);
 			}
 			else
 				return;
 			
-			if (!tfIdf.IsReady)
+			this.PrepareToSearch();
+		}
+		
+		protected void PrepareToSearch()
+		{
+			if (!searcher.IsReady)
 				return;
 			
-			tfIdf.CalucateTfIdfFactors();
 			try
 			{
-				tfIdf.CalucateTfIdfFactors();
+				searcher.CalucateTfIdfFactors();
 			}
 			catch (CalculationException ex)
 			{
 				wx.MessageDialog.ShowModal(ex.Message, "Błąd w obliczeniach", 
 				                           wx.WindowStyles.ICON_ERROR|wx.WindowStyles.DIALOG_OK);
-				tfIdf.ResetData();
+				searcher.ResetData();
 				wx.MessageDialog.ShowModal("Wczytane dane zostały zresetowane. Wczytaj dane ponownie", "Informacja", 
 				                           wx.WindowStyles.ICON_INFORMATION|wx.WindowStyles.DIALOG_OK);
 				termsTC.Value = documentsTC.Value = string.Empty;
 				return;
 			}
+			
+			// utworzenie nowego silnika grupowania ;)
+			grouper = new GroupEngine(searcher.Documents, this.kSC.Value, this.iterSC.Value);
 		}
 		
 		protected void OnSearchBtnClick(object sender, wx.Event evt)
 		{
 			resultsLC.DeleteAllItems();
 		
-			if (!tfIdf.IsReady)
+			if (!searcher.IsReady)
 			{
 				wx.MessageDialog.ShowModal("Wyszukiwarka nie jest gotowa, wpierw wczytaj dane", "Błąd", 
 				                           wx.WindowStyles.ICON_ERROR|wx.WindowStyles.DIALOG_OK);
 			}
-				
-			
+							
 			string query = searchTC.Value.Trim();
 			if (query == string.Empty)
 				return;
-						
-			
+									
 			List<SearchDocument> results = null; 
 			try
 			{
-				results = tfIdf.PerformSearch(query);
+				results = searcher.PerformSearch(query);
 			}
 			catch (CalculationException ex)
 			{
@@ -286,24 +283,51 @@ namespace SearchEngine
 				return;
 			}
 			
-			for (int i = 0; i<results.Count; i++)
+			List<CentroidGroup> groups = grouper.GroupDocuments();
+			// sortowanie dokumentow w grupach
+			foreach (CentroidGroup group in groups)
 			{
-				if (!showZerosMenuCheck.Checked)
-				{
-					if (results[i].TfIdfSim == 0)
-						break;
-				}
-				wx.ListItem[] row = new wx.ListItem[2];
-				row[0] = new wx.ListItem(results[i].Header, wx.ListColumnFormat.LEFT);
-				row[1] = new wx.ListItem(results[i].TfIdfSim.ToString());
-				resultsLC.AppendItemRow(row);
+				group.GroupDocuments.Sort();
+				group.GroupDocuments.Reverse();
 			}
+			// sortowanie grup pod wzgledem lacznego podobienstwa dokumentow w grupie do zapytania
+			groups.Sort();
+			groups.Reverse();
 			
+			
+			// wyswietlenie pogrupowanych wynikow
+			for (int i = 0; i < groups.Count; i++)
+			{
+				wx.ListItem[] row = new wx.ListItem[1];
+				row[0] = new wx.ListItem("Grupa #"+i);
+				resultsLC.AppendItemRow(row);
+				
+				for (int j = 0; j < groups[i].GroupDocuments.Count; j++)
+				{
+					if (!showZerosMenuCheck.Checked)
+					{
+						if (groups[i].GroupDocuments[j].TfIdfSim == 0)
+							break;
+					}
+					row = new wx.ListItem[3];
+					row[0] = new wx.ListItem(groups[i].GroupDocuments[j].Header, wx.ListColumnFormat.LEFT);
+					row[1] = new wx.ListItem(groups[i].GroupDocuments[j].Group);
+					row[2] = new wx.ListItem(groups[i].GroupDocuments[j].TfIdfSim.ToString());
+					resultsLC.AppendItemRow(row);
+				}
+				
+				// pusta linia
+				row = new wx.ListItem[1];
+				row[0] = new wx.ListItem(" ");
+				resultsLC.AppendItemRow(row);
+			}	
 		}
 		
 		protected void OnSizeChanged(object sender, wx.Event evt)
 		{
-			resultsLC.SetColumnWidth(0, resultsLC.ClientRect.Width - resultsLC.GetColumnWidth(1));
+			resultsLC.SetColumnWidth(0, (int)(0.8 * (resultsLC.ClientRect.Width - similarityColumnSize)));
+			resultsLC.SetColumnWidth(1, (int)(0.2 * (resultsLC.ClientRect.Width - similarityColumnSize)));
+			resultsLC.SetColumnWidth(2, similarityColumnSize);
 			evt.Skip();
 		}
 		
@@ -316,9 +340,9 @@ namespace SearchEngine
 		protected void OnShowTermsMenu(object sender, wx.Event evt)
 		{
 			if (detailsTermsFrame == null)
-				detailsTermsFrame = new DetailsFrame(this, "Dokumenty", tfIdf.ProcessedTerms);
+				detailsTermsFrame = new DetailsFrame(this, "Dokumenty", searcher.ProcessedTerms);
 			else
-				detailsTermsFrame.Text = tfIdf.ProcessedTerms;
+				detailsTermsFrame.Text = searcher.ProcessedTerms;
 			
 			detailsTermsFrame.Show();
 		}
@@ -326,12 +350,31 @@ namespace SearchEngine
 		protected void OnShowDocumentsMenu(object sender, wx.Event evt)
 		{
 			if (detailsDocumentsFrame == null)
-				detailsDocumentsFrame = new DetailsFrame(this, "Dokumenty", tfIdf.ProcessedDocuments);
+				detailsDocumentsFrame = new DetailsFrame(this, "Dokumenty", searcher.ProcessedDocuments);
 			else
-				detailsDocumentsFrame.Text = tfIdf.ProcessedDocuments;
+				detailsDocumentsFrame.Text = searcher.ProcessedDocuments;
 			
 			detailsDocumentsFrame.Show();
 		}
+		
+		protected void OnKSpinChanged(object sender, wx.Event evt)
+		{
+			if (this.kSC.Value < 1)
+				this.kSC.Value = 1;
+			
+			if (this.grouper != null)
+				this.grouper.K = this.kSC.Value;
+			
+		}
+		
+		protected void OnIterSpinChanged(object sender, wx.Event evt)
+		{
+			if (this.iterSC.Value < 1)
+				this.iterSC.Value = 1;
+			
+			if (this.grouper != null)
+				this.grouper.Iter = this.iterSC.Value;
+		}	
 	}
 	
 }

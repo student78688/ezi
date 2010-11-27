@@ -26,7 +26,8 @@ namespace SearchEngine
 			#region losowanie k dokumentow stanowiacych poczatkowe centroidy
 			Random rand = new Random();
 			List<SearchDocument> selectedDocs = new List<SearchDocument>();
-			for (int i = 0; i < k; i++)
+			int x = 0;
+			while (x < k)
 			{
 				int sel = rand.Next(documents.Count-1);
 				if (selectedDocs.Contains(documents[sel]))
@@ -35,6 +36,7 @@ namespace SearchEngine
 				
 				CentroidGroup centroid = new CentroidGroup(documents[sel], documents);
 				centroids.Add(centroid);				
+				x++;
 			}
 			#endregion
 			
@@ -47,7 +49,7 @@ namespace SearchEngine
 					centroids[centr].ResetGroup();
 							
 				// iteracja po wszystkich dokumentach kolekcji
-				for (int doc = 0; doc < documents.Count; i++)
+				for (int doc = 0; doc < documents.Count; doc++)
 				{
 					SearchDocument currentDoc = documents[doc];
 					// indeks najlepiej pasujacego centroidu

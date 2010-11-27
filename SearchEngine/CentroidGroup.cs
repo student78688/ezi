@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SearchEngine
 {
-	public class CentroidGroup
+	public class CentroidGroup : IComparable<CentroidGroup>
 	{
 		// srednia reprezentacja termow w TF-TDF dla centroidu
 		protected double[] centroidTfIdf;
@@ -77,7 +77,7 @@ namespace SearchEngine
 		public void ResetGroup()
 		{
 			oldCentroidGroup = centroidGroup;
-			centroidGroup = null;
+			centroidGroup = new List<SearchDocument>();
 		}
 		
 		public void AddToGroup(SearchDocument document)
@@ -99,6 +99,23 @@ namespace SearchEngine
 		public double GetDocumentSimilarity(SearchDocument doc)
 		{
 			return centroidSimilarity[doc];
+		}
+		
+		public double GroupQuerySimilarity
+		{
+			get 
+			{
+				double sum = 0;
+				for (int i = 0; i < centroidGroup.Count; i++)
+					sum += centroidGroup[i].TfIdfSim;
+				
+				return sum;
+			}
+		}
+		
+		public int CompareTo (CentroidGroup other)
+		{
+			return this.GroupQuerySimilarity.CompareTo(other.GroupQuerySimilarity);
 		}
 	}
 }

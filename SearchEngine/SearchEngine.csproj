@@ -46,17 +46,19 @@
     <Compile Include="TfIdfCalc.cs" />
     <Compile Include="TextProcessor.cs" />
     <None Include="data\document_test.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="data\keywords_test.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="SearchDocument.cs" />
     <Compile Include="SearchQuery.cs" />
     <Compile Include="DetailsFrame.cs" />
     <Compile Include="SearchElement.cs" />
-    <None Include="data\keywords-2.txt" />
-    <None Include="data\documents-2.txt" />
+    <None Include="data\keywords-2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\documents-2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="CentroidGroup.cs" />
     <Compile Include="GroupEngine.cs" />
   </ItemGroup>
@@ -72,10 +74,8 @@
     </None>
     <None Include="lib\wx.NET.dll" />
     <None Include="data\documents.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="data\keywords.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="lib\wx-c-0-9-0-2.dll" />
   </ItemGroup>

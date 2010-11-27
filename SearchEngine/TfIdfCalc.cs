@@ -88,9 +88,9 @@ namespace SearchEngine
 							while(((line = sr.ReadLine()) != string.Empty))
 							{
 								if (counter == 0)
-									group = string.Format("{0}", line);
+									group = (string.Format("{0}", line)).Trim();
 								if (counter == 1)
-									header = string.Format("{0} ", line);
+									header = (string.Format("{0} ", line)).Trim();
 								else
 									sb.Append(string.Format("{0} ", line));
 								counter++;
@@ -134,7 +134,7 @@ namespace SearchEngine
 			if (!this.IsReady)
 				return;
 			
-			#region caluclate idf
+			#region wyliczenie IDF
 			List<int[]> bagOfWords = new List<int[]>();
 			idf = new List<double>();
 			
@@ -152,28 +152,31 @@ namespace SearchEngine
 						termOccurents++;
 				}
 				
+				// dopuszczenie termow, ktore nie wystepuja w zadnym z dokumentow
 				if (termOccurents == 0)
-					throw new CalculationException(string.Format("Term: \"{0}\" nie występuje w żadnym dokumencie. " +
+				{
+//					throw new CalculationException(string.Format("Term: \"{0}\" nie występuje w żadnym dokumencie. " +
+//						"Wczytane dokumenty i termy nie pasują do siebie", terms[i]));
+					idf.Add(0.0);
+					System.Console.WriteLine(String.Format("UWAGA Term: \"{0}\" nie występuje w żadnym dokumencie. " +
 						"Wczytane dokumenty i termy nie pasują do siebie", terms[i]));
-				
-//				try
+				}
+				else
 				{
 					idf.Add(Math.Log10((double)documents.Count / (double)termOccurents));
 				}
-//				catch (DivideByZeroException)
-//				{
-//					throw new CalculationException(string.Format("Term: \"{0}\" nie występuje w żadnym dokumencie.", terms[i]));
-//				}
+
 //				System.Console.WriteLine("i={0} termoccurents = {1}, idf = {2}", i, termOccurents, idf[i]);
 			}
 			#endregion
 			
+			// wyliczenie TF-IDF
 			for(int i = 0; i < documents.Count; i++)
 			{
 				documents[i].CalculateTfIdf(terms, idf);
 			}
 		}
-		
+					
 		
 		public List<SearchDocument> PerformSearch(string query)
 		{		
@@ -194,7 +197,6 @@ namespace SearchEngine
 			return sortedDocuments;			
 		}
 		
-		
 		public bool IsReady 
 		{
 			get 
@@ -205,6 +207,11 @@ namespace SearchEngine
 				}
 				return false;
 			}
+		}
+		
+		public List<SearchDocument> Documents
+		{
+			get { return documents; }
 		}
 		
 		public void ResetData()

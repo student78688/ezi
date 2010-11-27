@@ -63,6 +63,11 @@ namespace SearchEngine
 			get { return tfIdfWidth; }
 		}
 		
+		public string Group
+		{
+			get { return group; }
+		}
+		
 	}
 }
 
