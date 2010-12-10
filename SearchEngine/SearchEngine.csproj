@@ -77,7 +77,9 @@
     </None>
     <None Include="data\keywords.txt">
     </None>
-    <None Include="lib\wx-c-0-9-0-2.dll" />
+    <None Include="lib\wx-c-0-9-0-2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stemmer\Stemmer.csproj">

@@ -271,10 +271,11 @@ namespace SearchEngine
 			if (query == string.Empty)
 				return;
 									
-			List<SearchDocument> results = null; 
+//			List<SearchDocument> results = null; 
 			try
 			{
-				results = searcher.PerformSearch(query);
+//				results = searcher.PerformSearch(query);
+				searcher.PerformSearch(query);
 			}
 			catch (CalculationException ex)
 			{
@@ -310,7 +311,7 @@ namespace SearchEngine
 							break;
 					}
 					row = new wx.ListItem[3];
-					row[0] = new wx.ListItem(groups[i].GroupDocuments[j].Header, wx.ListColumnFormat.LEFT);
+					row[0] = new wx.ListItem(" " + groups[i].GroupDocuments[j].Header, wx.ListColumnFormat.LEFT);
 					row[1] = new wx.ListItem(groups[i].GroupDocuments[j].Group);
 					row[2] = new wx.ListItem(groups[i].GroupDocuments[j].TfIdfSim.ToString());
 					resultsLC.AppendItemRow(row);
@@ -333,7 +334,7 @@ namespace SearchEngine
 		
 		protected void OnAboutMenu (object sender, wx.Event evt)
 		{
-			string msg = "Eksperymentalna wyszukiwarka v2\n\nJacek Trubłajewicz <gothic@os.pl>";
+			string msg = "Eksperymentalna wyszukiwarka v2\n\nJacek Trubłajewicz <gothic@os.pl>\nŁukasz Czejgis";
 			wx.MessageDialog.MessageBox (msg, "O programie");
 		}
 		
@@ -344,6 +345,9 @@ namespace SearchEngine
 			else
 				detailsTermsFrame.Text = searcher.ProcessedTerms;
 			
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				detailsDocumentsFrame.BackgroundColour = wx.SystemSettings.GetColour(wx.SystemColour.wxSYS_COLOUR_BTNFACE);	
+						
 			detailsTermsFrame.Show();
 		}
 		
@@ -354,6 +358,9 @@ namespace SearchEngine
 			else
 				detailsDocumentsFrame.Text = searcher.ProcessedDocuments;
 			
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				detailsDocumentsFrame.BackgroundColour = wx.SystemSettings.GetColour(wx.SystemColour.wxSYS_COLOUR_BTNFACE);	
+						
 			detailsDocumentsFrame.Show();
 		}
 		

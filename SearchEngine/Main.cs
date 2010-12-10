@@ -19,7 +19,7 @@ namespace SearchEngine
 		public override bool OnInit ()
 		{
 			SearchFrame mainFrame = new SearchFrame(null, wx.Window.wxID_ANY, 
-			                                        "Wyszukiwarka - Jacek Trubłajewicz, 78688",
+			                                        "Wyszukiwarka tekstowa v2",
 			                                        new Size(800, 600),
 			                                        wx.Window.wxDefaultPosition,
 			                                        wx.WindowStyles.FRAME_DEFAULT_STYLE);
